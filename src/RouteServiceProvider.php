@@ -1,18 +1,21 @@
 <?php
 namespace D3cr33\Routes;
 
+use D3cr33\Routes\Services\RouteService;
 use Illuminate\Support\ServiceProvider;
 
 class RouteServiceProvider extends ServiceProvider
 {
     public function register()
     {
-        //
+
     }
 
     public function boot()
     {
         $this->registerAndPublishMigrations();
+        $rs = $this->app->make(RouteService::class);
+        $rs->registerRoute();
     }
 
 

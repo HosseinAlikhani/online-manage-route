@@ -1,8 +1,11 @@
 <?php
 namespace D3cr33\Routes\Services;
 
+use App\Http\Controllers\TestController;
 use D3cr33\Routes\Models\Route;
+use D3cr33\Routes\RouteRegister;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Route as FacadesRoute;
 use phpDocumentor\Reflection\Types\Boolean;
 
 class RouteService
@@ -24,7 +27,9 @@ class RouteService
      */
     public function findRoutes(array $filters = []) :Collection
     {
-        return collect([]);
+        $routes = $this->model
+            ->get();
+        return $routes;
     }
 
     /**
@@ -86,10 +91,23 @@ class RouteService
     /**
      * Delete routes
      */
-    public function deleteRoutes(String $routeID) :Boolean
+    public function deleteRoutes(String $routeID) :bool
     {
         $route = $this->findRoute($routeID);
         $route->delete();
         return true;
+    }
+
+    public function registerRoute()
+    {
+        $rr = app(RouteRegister::class);
+        $routes = $this->findRoutes();
+        $routes->map( function($route) use($rr) {
+            dd( $rr::setRoute($route)->register() );
+            call_user_func([FacadesRoute::class, $route->request_method], 
+                $route->name, 
+                ["{$route->namespace}\\{$route->controller}", $route->controller_method])
+            ->middleware(array_merge($route->middleware ? [$route->middleware] : [], $route->throttle ? ["throttle:{$route->throttle}"] : []));
+        });
     }
 }
