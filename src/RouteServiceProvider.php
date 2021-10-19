@@ -14,8 +14,6 @@ class RouteServiceProvider extends ServiceProvider
     public function boot()
     {
         $this->registerAndPublishMigrations();
-        $rs = $this->app->make(RouteService::class);
-        $rs->registerRoute();
     }
 
 

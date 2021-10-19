@@ -11,11 +11,9 @@ class RouteRegister
      */
     protected static $route;
 
-    private static $_instance = null;
 
     public function __construct()
     {
-        self::$_instance = new self;
     }
 
     public static function setRoute($route)
@@ -27,9 +25,8 @@ class RouteRegister
      * Register route to container
      * @param Route $route
      */
-    public static function register(Route $route)
+    public static function register($route)
     {
-        dd('route', static::$route );
         // call_user_func(
             // [FacadesRoute::class, $route->request_method],
             // $route->name,

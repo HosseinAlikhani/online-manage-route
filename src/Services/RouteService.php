@@ -1,34 +1,19 @@
 <?php
 namespace D3cr33\Routes\Services;
 
-use App\Http\Controllers\TestController;
 use D3cr33\Routes\Models\Route;
-use D3cr33\Routes\RouteRegister;
 use Illuminate\Support\Collection;
-use Illuminate\Support\Facades\Route as FacadesRoute;
-use phpDocumentor\Reflection\Types\Boolean;
 
 class RouteService
 {
-    /**
-     * Instance of route
-     */
-    protected $model;
-    
-    public function __construct(Route $route)
-    {
-        $this->model = $route;
-    }
-
     /**
      * Return all routes
      * @param Array $filters
      * @return Collection
      */
-    public function findRoutes(array $filters = []) :Collection
+    public static function finds(array $filters = []) :Collection
     {
-        $routes = $this->model
-            ->get();
+        $routes = Route::all();
         return $routes;
     }
 
@@ -37,10 +22,9 @@ class RouteService
      * @param String $routeID
      * @return Collection
      */
-    public function findRoute(String $routeID) :Collection
+    public static function find(String $routeID) :Collection
     {
-        return $this->model
-            ->where('id', $routeID)
+        return Route::where('id', $routeID)
             ->first();
     }
 
@@ -59,10 +43,10 @@ class RouteService
      *      'order' =>  (string) DB order
      *  ]
      */
-    public function createRoutes(array $routeData) :Collection
+    public static function create(array $routeData) :Collection
     {
-        $route = $this->model->create($routeData);
-        return $this->findRoute($route->id);
+        $route = Route::create($routeData);
+        return SELF::find($route->id);
     }
 
     /**
@@ -81,9 +65,9 @@ class RouteService
      *  ]
      * @return collection
      */
-    public function updateRoutes(String $routeID, array $routeData) :Collection
+    public static function updateRoutes(String $routeID, array $routeData) :Collection
     {
-        $route = $this->findRoute($routeID);
+        $route = SELF::find($routeID);
         $route->update($routeData);
         return $route->fresh();
     }
@@ -91,23 +75,10 @@ class RouteService
     /**
      * Delete routes
      */
-    public function deleteRoutes(String $routeID) :bool
+    public static function deleteRoutes(String $routeID) :bool
     {
-        $route = $this->findRoute($routeID);
+        $route = SELF::find($routeID);
         $route->delete();
         return true;
-    }
-
-    public function registerRoute()
-    {
-        $rr = app(RouteRegister::class);
-        $routes = $this->findRoutes();
-        $routes->map( function($route) use($rr) {
-            dd( $rr::setRoute($route)->register() );
-            call_user_func([FacadesRoute::class, $route->request_method], 
-                $route->name, 
-                ["{$route->namespace}\\{$route->controller}", $route->controller_method])
-            ->middleware(array_merge($route->middleware ? [$route->middleware] : [], $route->throttle ? ["throttle:{$route->throttle}"] : []));
-        });
     }
 }
