@@ -1,35 +1,38 @@
 <?php
 namespace D3cr33\Routes;
 
+use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Route as FacadesRoute;
 
 class RouteRegister
 {
     /**
-     * The route collection instance
-     * @var Route
-     */
-    protected static $route;
-
-
-    public function __construct()
+    * Register route from db to container
+    */
+    public static function registerFromDb()
     {
+        $routes = static::findRoutesFromDb();
+        $routes->map( function($route) {
+            call_user_func(
+                [FacadesRoute::class, $route->request_method ],
+                $route->name,
+                $route->namespace.'\\'.$route->controller.'@'.$route->controller_method,
+            )->middleware(static::serializeMiddleware($route));
+        });
     }
 
-    public static function setRoute($route)
+    private static function findRoutesFromDb(): Collection
     {
-        static::$route = $route;
+        $routes = DB::table('routes')->get();
+        return collect($routes);
     }
 
-    /**
-     * Register route to container
-     * @param Route $route
-     */
-    public static function register($route)
+    private static function serializeMiddleware($route)
     {
-        // call_user_func(
-            // [FacadesRoute::class, $route->request_method],
-            // $route->name,
-        // );
+        $middleware = [];
+        if ( $route->middleware ) $middleware[] = $route->middleware;
+        if ( $route->throttle ) $middleware[] = 'throttle:'.$route->throttle;
+        return $middleware;
     }
 }
