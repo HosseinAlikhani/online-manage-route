@@ -1,7 +1,6 @@
 <?php
 namespace D3cr33\Routes;
 
-use D3cr33\Routes\Services\RouteService;
 use Illuminate\Support\ServiceProvider;
 
 class RouteServiceProvider extends ServiceProvider
@@ -14,9 +13,13 @@ class RouteServiceProvider extends ServiceProvider
     public function boot()
     {
         $this->registerAndPublishMigrations();
+        RouteRegister::registerFromDb();
     }
 
 
+    /**
+     * register migrations
+     */
     private function registerAndPublishMigrations()
     {
         $this->loadMigrationsFrom(__DIR__.'/../database/migrations');
