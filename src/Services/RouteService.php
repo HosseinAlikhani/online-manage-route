@@ -22,7 +22,7 @@ class RouteService
      * @param String $routeID
      * @return Collection
      */
-    public static function find(String $routeID) :Collection
+    public static function find(String $routeID)
     {
         return Route::where('id', $routeID)
             ->first();
@@ -43,7 +43,7 @@ class RouteService
      *      'order' =>  (string) DB order
      *  ]
      */
-    public static function create(array $routeData) :Collection
+    public static function create(array $routeData) :Route
     {
         $route = Route::create($routeData);
         return SELF::find($route->id);
