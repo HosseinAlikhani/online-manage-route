@@ -1,6 +1,7 @@
 <?php
 namespace D3cr33\Routes;
 
+use Exception;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Route as FacadesRoute;
@@ -12,14 +13,19 @@ class RouteRegister
     */
     public static function registerFromDb()
     {
-        $routes = static::findRoutesFromDb();
-        $routes->map( function($route) {
-            call_user_func(
-                [FacadesRoute::class, $route->request_method ],
-                $route->name,
-                $route->namespace.'\\'.$route->controller.'@'.$route->controller_method,
-            )->middleware(static::serializeMiddleware($route));
-        });
+        try {
+            $routes = static::findRoutesFromDb();
+            $routes->map( function($route) {
+                call_user_func(
+                    [FacadesRoute::class, $route->request_method ],
+                    $route->name,
+                    $route->namespace.'\\'.$route->controller.'@'.$route->controller_method,
+                )->middleware(static::serializeMiddleware($route));
+            });
+        }catch(Exception $e) {
+
+        }
+
     }
 
     private static function findRoutesFromDb(): Collection
