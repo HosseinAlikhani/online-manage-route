@@ -1,12 +1,12 @@
 {
-    "name": "d3cr33/manage-routes",
+    "name": "d3cr33/online-manage-routes",
     "description": "Manage Laravel Routes",
     "keywords": [
         "d3cr33",
         "laravel",
         "routes"
     ],
-    "homepage": "https://github.com/HosseinAlikhani/d3cr33-manage-routes",
+    "homepage": "https://github.com/HosseinAlikhani/online-manage-routes",
     "license": "MIT",
     "authors": [
         {
@@ -16,15 +16,14 @@
         }
     ],
     "require": {
-        "php" : "^7.2.5|^8.0",
-        "illuminate/auth": "^6.0|^7.0|^8.0",
-        "illuminate/container": "^6.0|^7.0|^8.0",
-        "illuminate/contracts": "^6.0|^7.0|^8.0",
-        "illuminate/database": "^6.0|^7.0|^8.0"
+        "php": "^8.0.2",
+        "illuminate/auth": "^9.0",
+        "illuminate/container": "^9.0",
+        "illuminate/contracts": "^9.0",
+        "illuminate/database": "^9.0"
     },
     "require-dev": {
-        "orchestra/testbench": "^4.0|^5.0|^6.0",
-        "phpunit/phpunit": "^8.0|^9.0",
+        "phpunit/phpunit": "^9.5.10",
         "predis/predis": "^1.1"
     },
     "autoload": {
