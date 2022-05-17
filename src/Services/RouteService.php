@@ -31,17 +31,15 @@ class RouteService
     /**
      * Create Route
      * @param Array $routeData
-     *  $routeData = [
-     *      'request_method'    =>  (string) DB request_method,
-     *      'name'  =>  (string) DB name,
-     *      'prefix'    =>  (string) DB prefix,
-     *      'namespace' =>  (string) DB namespace,
-     *      'controller'    =>  (string) DB controller,
-     *      'controller_method' =>  (string) DB controller_method,
-     *      'middleware'    =>  (string) DB middleware,
-     *      'throttle'  =>  (string) DB throttle,
-     *      'order' =>  (string) DB order
-     *  ]
+     * @var string $routeData[request_method]
+     * @var string $routeData[name]
+     * @var string $routeData[prefix]
+     * @var string $routeData[namespace]
+     * @var string $routeData[controller]
+     * @var string $routeData[controller_method]
+     * @var string $routeData[middleware]
+     * @var string $routeData[throttle]
+     * @var string $routeData[order]
      */
     public static function create(array $routeData) :Route
     {
@@ -52,17 +50,15 @@ class RouteService
     /**
      * @param String $routeID
      * @param Array $routeData
-     *  $routeData = [
-     *      'request_method'    =>  (string) DB request_method,
-     *      'name'  =>  (string) DB name,
-     *      'prefix'    =>  (string) DB prefix,
-     *      'namespace' =>  (string) DB namespace,
-     *      'controller'    =>  (string) DB controller,
-     *      'controller_method' =>  (string) DB controller_method,
-     *      'middleware'    =>  (string) DB middleware,
-     *      'throttle'  =>  (string) DB throttle,
-     *      'order' =>  (string) DB order
-     *  ]
+     * @var string $routeData[request_method]
+     * @var string $routeData[name]
+     * @var string $routeData[prefix]
+     * @var string $routeData[namespace]
+     * @var string $routeData[controller]
+     * @var string $routeData[controller_method]
+     * @var string $routeData[middleware]
+     * @var string $routeData[throttle]
+     * @var string $routeData[order]
      * @return collection
      */
     public static function updateRoutes(String $routeID, array $routeData) :Collection
