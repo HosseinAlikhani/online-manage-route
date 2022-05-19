@@ -1,80 +1,69 @@
 <?php
 namespace D3cr33\Routes\Services;
 
+use D3cr33\Routes\Contracts\RouteRepositoryinterface;
+use D3cr33\Routes\Contracts\RouteServiceInterface;
 use D3cr33\Routes\Models\Route;
-use Illuminate\Support\Collection;
 
-class RouteService
+class RouteService implements RouteServiceInterface
 {
     /**
-     * Return all routes
-     * @param Array $filters
-     * @return Collection
+     * store route Repository
+     * @var RouteRepositoryInterface
      */
-    public static function finds(array $filters = []) :Collection
+    private RouteRepositoryinterface $routeRepository;
+
+    public function __construct(RouteRepositoryinterface $routeRepository)
     {
-        $routes = Route::all();
-        return $routes;
+        $this->routeRepository = $routeRepository;
     }
 
     /**
-     * Find Route
-     * @param String $routeID
-     * @return Collection
+     * find routes
      */
-    public static function find(String $routeID)
+    public function findRoutes()
     {
-        return Route::where('id', $routeID)
-            ->first();
+
     }
 
     /**
-     * Create Route
-     * @param Array $routeData
-     * @var string $routeData[request_method]
-     * @var string $routeData[name]
-     * @var string $routeData[prefix]
-     * @var string $routeData[namespace]
-     * @var string $routeData[controller]
-     * @var string $routeData[controller_method]
-     * @var string $routeData[middleware]
-     * @var string $routeData[throttle]
-     * @var string $routeData[order]
+     * find route
+     * @param string $routeId
+     * @return ?Route
      */
-    public static function create(array $routeData) :Route
+    public function findRoute(string $routeId): ?Route
     {
-        $route = Route::create($routeData);
-        return SELF::find($route->id);
+
     }
 
     /**
-     * @param String $routeID
-     * @param Array $routeData
-     * @var string $routeData[request_method]
-     * @var string $routeData[name]
-     * @var string $routeData[prefix]
-     * @var string $routeData[namespace]
-     * @var string $routeData[controller]
-     * @var string $routeData[controller_method]
-     * @var string $routeData[middleware]
-     * @var string $routeData[throttle]
-     * @var string $routeData[order]
-     * @return collection
+     * create route
+     * @param array $routeData
+     * @return Route
      */
-    public static function updateRoutes(String $routeID, array $routeData) :Collection
+    public function createRoute(array $routeData): Route
     {
-        $route = SELF::find($routeID);
-        $route->update($routeData);
-        return $route->fresh();
+
     }
 
     /**
-     * Delete routes
+     * update route
+     * @param string $routeId
+     * @param array $routeData
+     * @return Route
      */
-    public static function deleteRoutes(String $routeID) :bool
+    public function updateRoute(string $routeId, array $routeData): ?Route
     {
-        $route = SELF::find($routeID);
-        $route->delete();
-        return true;
+
+    }
+
+    /**
+     * delete route
+     * @param string $routeId
+     * @return bool
+     */
+    public function deleteRoute(string $routeId): bool
+    {
+
     }
 }
