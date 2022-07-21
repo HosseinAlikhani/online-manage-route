@@ -2,23 +2,23 @@
 namespace D3cr33\Routes\Contracts;
 
 use D3cr33\Routes\Models\Route;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Collection;
 
 interface RouteRepositoryinterface
 {
     /**
-     * create new model instance and assign to model property
+     * create new route instance and assign to model property
+     * @param Route $route
      * @return void
      */
-    public function __construct(Model $model);
+    public function __construct(Route $route);
 
     /**
      * finds routes
      * @param array $filters
      * @return Collection
      */
-    public function finds(array $filters = []): Collection;
+    public function finds(): Collection;
 
     /**
      * Find Route
@@ -66,4 +66,11 @@ interface RouteRepositoryinterface
      * @return bool
      */
     public function delete(string $routeId): bool;
+
+    /**
+     * set filter params
+     * @param array $filterParams
+     * @return RouteRepositoryinterface
+     */
+    public function setFilters(array $filterParams): RouteRepositoryinterface;
 }
