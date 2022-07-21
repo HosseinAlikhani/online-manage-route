@@ -14,8 +14,9 @@ interface RouteServiceInterface
 
     /**
      * find routes
+     * @param array $filters
      */
-    public function findRoutes();
+    public function findRoutes(array $filters = []);
 
     /**
      * find route
