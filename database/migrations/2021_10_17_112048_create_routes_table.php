@@ -23,7 +23,7 @@ class CreateRoutesTable extends Migration
             $table->string(Route::PREFIX)->nullable();
             $table->string(Route::NAMESPACE)->nullable();
             $table->string(Route::MIDDLEWARE)->nullable();
-            $table->string(Route::MIDDLEWARE)->nullable();
+            $table->string(Route::THROTTLE)->nullable();
             $table->integer(Route::ORDER)->default(0);
             $table->boolean(Route::IS_GROUP)->default(false)->comment('determine record is group or not');
             $table->integer(Route::GROUP_PARENT)->default(0)->comment('save group id record');
