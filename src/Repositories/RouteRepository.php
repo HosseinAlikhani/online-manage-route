@@ -1,18 +1,18 @@
 <?php
-namespace D3cr33\Routes\Services\Repositories;
+namespace D3cr33\Routes\Repositories;
 
+use D3cr33\Routes\Contracts\Route as ContractsRoute;
 use D3cr33\Routes\Contracts\RouteRepositoryinterface;
 use D3cr33\Routes\Models\Route;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Collection;
 
-final class RouteRepositories implements RouteRepositoryinterface
+final class RouteRepository implements RouteRepositoryinterface
 {
     /**
      * store route instance
-     * @var Model
+     * @var Route
      */
-    private Model $route;
+    private Route $route;
 
     public function __construct(Route $route)
     {
@@ -24,7 +24,7 @@ final class RouteRepositories implements RouteRepositoryinterface
      * @param array $filters
      * @return Collection
      */
-    public function finds(array $filters = []): Collection
+    public function finds(): Collection
     {
         //
     }
@@ -92,5 +92,41 @@ final class RouteRepositories implements RouteRepositoryinterface
         $route = $this->find($routeId);
         if ( !$route ) return false;
         return $route->delete();
+    }
+
+    /**
+     * set filter params
+     * @param array $filterParams
+     * @return RouteRepositoryinterface
+     */
+    public function setFilters(array $filterParams): RouteRepositoryinterface
+    {
+        $this->filterParams = [
+            ContractsRoute::REQUEST_METHOD  =>  $filterParams['request_method'] ?? null,
+            ContractsRoute::NAME    =>  $filterParams['name'] ?? null,
+            ContractsRoute::CONTROLLER  =>  $filterParams['controller'] ?? null,
+            ContractsRoute::CONTROLLER_METHOD   =>  $filterParams['controller_method'] ?? null,
+            ContractsRoute::PREFIX  =>  $filterParams['prefix'] ?? null,
+            ContractsRoute::NAMESPACE   =>  $filterParams['namespace'] ?? null,
+            ContractsRoute::MIDDLEWARE  =>  $filterParams['middleware'] ?? null,
+            ContractsRoute::THROTTLE    =>  $filterParams['throttle'] ?? null,
+            ContractsRoute::ORDER   =>  $filterParams['order'] ?? null,
+            ContractsRoute::IS_GROUP    =>  $filterParams['is_group'] ?? null,
+            ContractsRoute::GROUP_PARENT    =>  $filterParams['group_parent'] ?? null,
+            ContractsRoute::CREATED_AT  =>  [],
+            ContractsRoute::UPDATED_AT  =>  [],
+            ContractsRoute::DELETED_AT  =>  [],
+        ];
+
+        return $this;
+    }
+
+    /**
+     * get filter params
+     * @return array
+     */
+    private function getFilters(): array
+    {
+        return $this->filterParams;
     }
 }
