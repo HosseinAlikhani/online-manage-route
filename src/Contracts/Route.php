@@ -15,4 +15,7 @@ interface Route
     public const ORDER = 'order';
     public const IS_GROUP = 'is_group';
     public const GROUP_PARENT = 'group_parent';
+    public const CREATED_AT = 'created_at';
+    public const UPDATED_AT = 'updated_at';
+    public const DELETED_AT = 'deleted_at';
 }
