@@ -23,12 +23,14 @@
         "illuminate/database": "^9.0"
     },
     "require-dev": {
+        "orchestra/testbench": "^7.6",
         "phpunit/phpunit": "^9.5.10",
         "predis/predis": "^1.1"
     },
     "autoload": {
         "psr-4": {
-            "D3cr33\\Routes\\": "src"
+            "D3cr33\\Routes\\": "src",
+            "D3cr33\\Routes\\Test\\": "tests"
         }
     },
     "autoload-dev": {
