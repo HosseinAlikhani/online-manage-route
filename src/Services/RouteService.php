@@ -36,17 +36,17 @@ class RouteService implements RouteServiceInterface
      */
     public function findRoute(string $routeId): ?Route
     {
-
+        return $this->routeRepository->find($routeId);
     }
 
     /**
      * create route
      * @param array $routeData
-     * @return Route
+     * @return ?Route
      */
-    public function createRoute(array $routeData): Route
+    public function createRoute(array $routeData): ?Route
     {
-
+        return $this->routeRepository->create($routeData);
     }
 
     /**
@@ -57,7 +57,7 @@ class RouteService implements RouteServiceInterface
      */
     public function updateRoute(string $routeId, array $routeData): ?Route
     {
-
+        return $this->routeRepository->update($routeId, $routeData);
     }
 
     /**
@@ -67,6 +67,6 @@ class RouteService implements RouteServiceInterface
      */
     public function deleteRoute(string $routeId): bool
     {
-
+        return $this->routeRepository->delete($routeId);
     }
 }
