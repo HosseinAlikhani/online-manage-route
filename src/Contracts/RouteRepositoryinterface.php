@@ -2,6 +2,7 @@
 namespace D3cr33\Routes\Contracts;
 
 use D3cr33\Routes\Models\Route;
+use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Collection;
 
 interface RouteRepositoryinterface
@@ -16,9 +17,9 @@ interface RouteRepositoryinterface
     /**
      * finds routes
      * @param array $filters
-     * @return Collection
+     * @return Collection|LengthAwarePaginator
      */
-    public function finds(): Collection;
+    public function finds(): Collection|LengthAwarePaginator;
 
     /**
      * Find Route
@@ -73,4 +74,10 @@ interface RouteRepositoryinterface
      * @return RouteRepositoryinterface
      */
     public function setFilters(array $filterParams): RouteRepositoryinterface;
+
+    /**
+     * set paginate page
+     * @return RouteRepositoryInterface
+     */
+    public function setPaginate(string $paginatePage): RouteRepositoryinterface;
 }
