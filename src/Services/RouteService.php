@@ -24,7 +24,9 @@ class RouteService implements RouteServiceInterface
      */
     public function findRoutes(array $filters = [])
     {
-        //
+        $this->routeRepository->setFilters($filters);
+        $this->routeRepository->setPaginate(10);
+        return $this->routeRepository->finds();
     }
 
     /**
