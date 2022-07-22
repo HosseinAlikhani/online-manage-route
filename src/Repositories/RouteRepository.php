@@ -75,7 +75,7 @@ final class RouteRepository implements RouteRepositoryinterface
      */
     public function find(string $routeId): ?Route
     {
-        return $this->model->find($routeId);
+        return $this->route->find($routeId);
     }
 
     /**
@@ -90,11 +90,11 @@ final class RouteRepository implements RouteRepositoryinterface
      * @var string $routeData[middleware]
      * @var string $routeData[throttle]
      * @var string $routeData[order]
-     * @return Route;
+     * @return ?Route;
      */
-    public function create(array $routeData): Route
+    public function create(array $routeData): ?Route
     {
-        $route = $this->model->create($routeData);
+        $route = $this->route->create($routeData);
         return $this->find($route->id);
     }
 
