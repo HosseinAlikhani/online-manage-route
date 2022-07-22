@@ -3,6 +3,7 @@
 namespace D3cr33\Routes\Models;
 
 use D3cr33\Routes\Contracts\Route as ContractsRoute;
+use D3cr33\Routes\Models\factories\RouteFactory;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -12,6 +13,11 @@ class Route extends Model
     use HasFactory;
 
     public $guarded = [ 'id' ];
+
+    protected static function newFactory(): RouteFactory
+    {
+        return RouteFactory::new();
+    }
 
     public function scopeOfRequestMethod(Builder $query, $requestMethod)
     {
