@@ -4,6 +4,7 @@ namespace D3cr33\Routes\Repositories;
 use D3cr33\Routes\Contracts\Route as ContractsRoute;
 use D3cr33\Routes\Contracts\RouteRepositoryinterface;
 use D3cr33\Routes\Models\Route;
+use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Collection;
 
 final class RouteRepository implements RouteRepositoryinterface
@@ -14,6 +15,18 @@ final class RouteRepository implements RouteRepositoryinterface
      */
     private Route $route;
 
+    /**
+     * store filter params
+     * @var ?array
+     */
+    private array $filterParams = [];
+
+    /**
+     * store pagiante page
+     * @var ?string
+     */
+    private ?string $paginatePage = null;
+
     public function __construct(Route $route)
     {
         $this->route = $route;
@@ -22,11 +35,37 @@ final class RouteRepository implements RouteRepositoryinterface
     /**
      * finds routes
      * @param array $filters
-     * @return Collection
+     * @return Collection|LengthAwarePaginator
      */
-    public function finds(): Collection
+    public function finds(): Collection|LengthAwarePaginator
     {
-        //
+        // query instance from Route Model
+        $instance = $this->route->query();
+
+        // foreach on filters and call scope method
+        foreach( $this->getFilters() as $key => $filter ) {
+
+            // change snakeCase to camelCase
+            $scopeName = str_replace(' ', '', ucwords( str_replace('_', ' ', $key) ) );
+
+            // generate scope method name
+            $scopeMethodName = 'scopeOf' . $scopeName;
+
+            // check if method exists call scope
+            if ( method_exists($this->route, $scopeMethodName ) ) {
+
+                // call Route Model scope
+                $instance = $instance->{'of' . $scopeName}($filter);
+            }
+        }
+
+        if ( $this->getPaginate() ) {
+            $instance = $instance->paginate( $this->getPaginate() );
+        } else {
+            $instance = $instance->get();
+        }
+
+        return $instance;
     }
 
     /**
@@ -122,11 +161,30 @@ final class RouteRepository implements RouteRepositoryinterface
     }
 
     /**
+     * set paginate page
+     * @return RouteRepositoryInterface
+     */
+    public function setPaginate(string $paginatePage): RouteRepositoryinterface
+    {
+        $this->paginatePage = $paginatePage;
+        return $this;
+    }
+
+    /**
      * get filter params
      * @return array
      */
     private function getFilters(): array
     {
         return $this->filterParams;
+    }
+
+    /**
+     * get paginate page
+     * @return ?string
+     */
+    private function getPaginate(): ?string
+    {
+        return $this->paginatePage;
     }
 }
