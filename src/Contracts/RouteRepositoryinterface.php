@@ -40,9 +40,9 @@ interface RouteRepositoryinterface
      * @var string $routeData[middleware]
      * @var string $routeData[throttle]
      * @var string $routeData[order]
-     * @return Route;
+     * @return ?Route;
      */
-    public function create(array $routeData) :Route;
+    public function create(array $routeData) :?Route;
 
     /**
      * update Route
