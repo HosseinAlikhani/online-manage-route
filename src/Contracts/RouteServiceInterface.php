@@ -28,9 +28,9 @@ interface RouteServiceInterface
     /**
      * create route
      * @param array $routeData
-     * @return Route
+     * @return ?Route
      */
-    public function createRoute(array $routeData): Route;
+    public function createRoute(array $routeData): ?Route;
 
     /**
      * update route
