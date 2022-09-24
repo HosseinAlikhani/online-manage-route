@@ -19,7 +19,7 @@ class RouteServiceProvider extends ServiceProvider
     {
         $this->registerAndPublishMigrations();
 
-        RouteRegister::registerFromDb();
+        Routes::compile();
     }
 
 
