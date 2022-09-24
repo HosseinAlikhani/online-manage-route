@@ -71,6 +71,33 @@ final class Route implements RouteInterface
      */
     private int $groupParent;
 
+    public function __construct(
+        ?string $requestMethod,
+        ?string $name,
+        ?string $controller,
+        ?string $controllerMethod,
+        ?string $prefix,
+        ?string $namespace,
+        ?string $middleware,
+        ?string $throttle,
+        int $order,
+        bool $isGroup,
+        int $groupParent
+    )
+    {
+        $this->requestMethod = $requestMethod;
+        $this->name = $name;
+        $this->controller = $controller;
+        $this->controllerMethod = $controllerMethod;
+        $this->prefix = $prefix;
+        $this->namespace = $namespace;
+        $this->middleware = $middleware;
+        $this->throttle = $throttle;
+        $this->order = $order;
+        $this->isGroup = $isGroup;
+        $this->groupParent = $groupParent;
+    }
+
     /**
      * get request method
      * @return ?string
@@ -168,5 +195,22 @@ final class Route implements RouteInterface
     public function getGroupParent(): int
     {
         return $this->groupParent;
+    }
+
+    public static function toObject(array $routeData)
+    {
+        return new static(
+            $routeData['request_method'] ?? null,
+            $routeData['name'] ?? null,
+            $routeData['controller'] ?? null,
+            $routeData['controller_method'] ?? null,
+            $routeData['prefix'] ?? null,
+            $routeData['namespace'] ?? null,
+            $routeData['middleware'] ?? null,
+            $routeData['throttle'] ?? null,
+            $routeData['order'] ?? null,
+            $routeData['is_group'] ?? null,
+            $routeData['group_parent'] ?? null
+        );
     }
 }
