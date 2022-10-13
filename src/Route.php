@@ -1,6 +1,7 @@
 <?php
 namespace D3cr33\Routes;
 
+use D3cr33\Routes\Contracts\Route as ContractsRoute;
 use D3cr33\Routes\Contracts\RouteInterface;
 
 final class Route implements RouteInterface
@@ -195,6 +196,23 @@ final class Route implements RouteInterface
     public function getGroupParent(): int
     {
         return $this->groupParent;
+    }
+
+    public function toArray(): array
+    {
+        return [
+            ContractsRoute::REQUEST_METHOD  =>  $this->getRequestMethod(),
+            ContractsRoute::NAME    =>  $this->getName(),
+            ContractsRoute::CONTROLLER  =>  $this->getController(),
+            ContractsRoute::CONTROLLER_METHOD   =>  $this->getControllerMethod(),
+            ContractsRoute::PREFIX  =>  $this->getPrefix(),
+            ContractsRoute::NAMESPACE   =>  $this->getPrefix(),
+            ContractsRoute::MIDDLEWARE  =>  $this->getMiddleware(),
+            ContractsRoute::THROTTLE    =>  $this->getThrottle(),
+            ContractsRoute::ORDER   =>  $this->getOrder(),
+            ContractsRoute::IS_GROUP    =>  $this->getIsGroup(),
+            ContractsRoute::GROUP_PARENT    =>  $this->getGroupParent(),
+        ];
     }
 
     public static function toObject(array $routeData)

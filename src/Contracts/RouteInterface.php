@@ -69,4 +69,10 @@ interface RouteInterface
      * @return int
      */
     public function getGroupParent(): int;
+
+    /**
+     * return all param to array
+     * @return array
+     */
+    public function toArray(): array;
 }
