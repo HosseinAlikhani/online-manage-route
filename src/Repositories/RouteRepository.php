@@ -2,6 +2,7 @@
 namespace D3cr33\Routes\Repositories;
 
 use D3cr33\Routes\Contracts\Route as ContractsRoute;
+use D3cr33\Routes\Contracts\RouteInterface;
 use D3cr33\Routes\Contracts\RouteRepositoryinterface;
 use D3cr33\Routes\Models\Route;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
@@ -80,44 +81,26 @@ final class RouteRepository implements RouteRepositoryinterface
 
     /**
      * Create Route
-     * @param Array $routeData
-     * @var string $routeData[request_method]
-     * @var string $routeData[name]
-     * @var string $routeData[prefix]
-     * @var string $routeData[namespace]
-     * @var string $routeData[controller]
-     * @var string $routeData[controller_method]
-     * @var string $routeData[middleware]
-     * @var string $routeData[throttle]
-     * @var string $routeData[order]
+     * @param RouteInterface $route
      * @return ?Route;
      */
-    public function create(array $routeData): ?Route
+    public function create(RouteInterface $route): ?Route
     {
-        $route = $this->route->create($routeData);
+        $route = $this->route->create($route->toArray());
         return $this->find($route->id);
     }
 
     /**
      * update Route
      * @param string $routeId
-     * @param Array $routeData
-     * @var string $routeData[request_method]
-     * @var string $routeData[name]
-     * @var string $routeData[prefix]
-     * @var string $routeData[namespace]
-     * @var string $routeData[controller]
-     * @var string $routeData[controller_method]
-     * @var string $routeData[middleware]
-     * @var string $routeData[throttle]
-     * @var string $routeData[order]
+     * @param RouteInterface $route
      * @return Route|null
      */
-    public function update(string $routeId, array $routeData): ?Route
+    public function update(string $routeId, RouteInterface $route): ?Route
     {
         $route = $this->find($routeId);
         if ( !$route ) return false;
-        $route->update($routeData);
+        $route->update($route->toArray());
         return $route->fresh();
     }
 

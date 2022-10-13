@@ -30,36 +30,18 @@ interface RouteRepositoryinterface
 
     /**
      * Create Route
-     * @param Array $routeData
-     * @var string $routeData[request_method]
-     * @var string $routeData[name]
-     * @var string $routeData[prefix]
-     * @var string $routeData[namespace]
-     * @var string $routeData[controller]
-     * @var string $routeData[controller_method]
-     * @var string $routeData[middleware]
-     * @var string $routeData[throttle]
-     * @var string $routeData[order]
+     * @param RouteInterface $route
      * @return ?Route;
      */
-    public function create(array $routeData) :?Route;
+    public function create(RouteInterface $route): ?Route;
 
     /**
      * update Route
      * @param string $routeId
-     * @param Array $routeData
-     * @var string $routeData[request_method]
-     * @var string $routeData[name]
-     * @var string $routeData[prefix]
-     * @var string $routeData[namespace]
-     * @var string $routeData[controller]
-     * @var string $routeData[controller_method]
-     * @var string $routeData[middleware]
-     * @var string $routeData[throttle]
-     * @var string $routeData[order]
+     * @param RouteInterface $route
      * @return Route|null
      */
-    public function update(string $routeId, array $routeData): Route|null;
+    public function update(string $routeId, RouteInterface $route): ?Route;
 
     /**
      * delete route
