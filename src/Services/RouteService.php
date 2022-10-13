@@ -4,6 +4,7 @@ namespace D3cr33\Routes\Services;
 use D3cr33\Routes\Contracts\RouteRepositoryinterface;
 use D3cr33\Routes\Contracts\RouteServiceInterface;
 use D3cr33\Routes\Models\Route;
+use D3cr33\Routes\Route as RoutesRoute;
 
 class RouteService implements RouteServiceInterface
 {
@@ -46,7 +47,9 @@ class RouteService implements RouteServiceInterface
      */
     public function createRoute(array $routeData): ?Route
     {
-        return $this->routeRepository->create($routeData);
+        return $this->routeRepository->create(
+            RoutesRoute::toObject($routeData)
+        );
     }
 
     /**
@@ -57,7 +60,10 @@ class RouteService implements RouteServiceInterface
      */
     public function updateRoute(string $routeId, array $routeData): ?Route
     {
-        return $this->routeRepository->update($routeId, $routeData);
+        return $this->routeRepository->update(
+            $routeId,
+            RoutesRoute::toObject($routeData)
+        );
     }
 
     /**
