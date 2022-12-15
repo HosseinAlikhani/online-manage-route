@@ -19,6 +19,13 @@ class Route extends Model
         return RouteFactory::new();
     }
 
+    public function scopeOfId(Builder $query, array|string $id)
+    {
+        if ( $id === null ) return $query;
+        $id = is_array($id) ? $id : [$id];
+        return $query->whereIn(ContractsRoute::ID, $id);
+    }
+
     public function scopeOfRequestMethod(Builder $query, $requestMethod)
     {
         if ( $requestMethod === null ) return $query;
