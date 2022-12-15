@@ -4,6 +4,7 @@ namespace D3cr33\Routes\Contracts;
 interface Route
 {
     public const TABLE = 'routes';
+    public const ID = 'id';
     public const REQUEST_METHOD = 'request_method';
     public const NAME = 'name';
     public const CONTROLLER = 'controller';
