@@ -206,7 +206,7 @@ final class Route implements RouteInterface
             ContractsRoute::CONTROLLER  =>  $this->getController(),
             ContractsRoute::CONTROLLER_METHOD   =>  $this->getControllerMethod(),
             ContractsRoute::PREFIX  =>  $this->getPrefix(),
-            ContractsRoute::NAMESPACE   =>  $this->getPrefix(),
+            ContractsRoute::NAMESPACE   =>  $this->getNamespace(),
             ContractsRoute::MIDDLEWARE  =>  $this->getMiddleware(),
             ContractsRoute::THROTTLE    =>  $this->getThrottle(),
             ContractsRoute::ORDER   =>  $this->getOrder(),
