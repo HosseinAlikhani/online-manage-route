@@ -98,10 +98,10 @@ final class RouteRepository implements RouteRepositoryinterface
      */
     public function update(string $routeId, RouteInterface $route): ?Route
     {
-        $route = $this->find($routeId);
-        if ( !$route ) return false;
-        $route->update($route->toArray());
-        return $route->fresh();
+        $model = $this->find($routeId);
+        if ( !$model ) return false;
+        $model->update($route->toArray());
+        return $model->fresh();
     }
 
     /**
@@ -123,7 +123,8 @@ final class RouteRepository implements RouteRepositoryinterface
      */
     public function setFilters(array $filterParams): RouteRepositoryinterface
     {
-        $this->filterParams = [
+        $filterParams = [
+            ContractsRoute::ID  =>  $filterParams['id'] ?? null,
             ContractsRoute::REQUEST_METHOD  =>  $filterParams['request_method'] ?? null,
             ContractsRoute::NAME    =>  $filterParams['name'] ?? null,
             ContractsRoute::CONTROLLER  =>  $filterParams['controller'] ?? null,
@@ -139,6 +140,10 @@ final class RouteRepository implements RouteRepositoryinterface
             ContractsRoute::UPDATED_AT  =>  [],
             ContractsRoute::DELETED_AT  =>  [],
         ];
+
+        $this->filterParams = array_filter($filterParams, function($param){
+            return $param || (is_array($param) && count($param)) ? $param : null;
+        });
 
         return $this;
     }
